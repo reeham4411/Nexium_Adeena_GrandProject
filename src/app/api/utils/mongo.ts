@@ -1,8 +1,19 @@
-import { MongoClient } from "mongodb"
+import { MongoClient } from "mongodb";
 
-const uri = process.env.MONGODB_URI!
-const client = new MongoClient(uri)
+const uri = process.env.MONGODB_URI!;
 
-export const db = client.db("serenely")
+if (!uri) {
+  throw new Error('Missing MongoDB URI environment variable');
+}
 
+const client = new MongoClient(uri);
+let cachedDb: ReturnType<typeof client.db> | null = null;
 
+export async function connectToMongo() {
+  if (!cachedDb) {
+    await client.connect();
+    cachedDb = client.db("mental_health_tracker");
+  }
+
+  return { db: cachedDb };
+}
