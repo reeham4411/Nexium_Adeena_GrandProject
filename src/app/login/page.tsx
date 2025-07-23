@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { supabase } from "../lib/supabase";
 
@@ -7,6 +9,7 @@ export default function Login() {
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log("Login submitted"); // ✅ Check if this appears
     const { error } = await supabase.auth.signInWithOtp({ email });
     setMessage(error ? error.message : "Check your email for the login link!");
   };
