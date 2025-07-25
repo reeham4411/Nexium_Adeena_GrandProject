@@ -1,26 +1,41 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from 'next/server';
 
-export async function POST(req: NextRequest) {
+export async function POST(request: NextRequest) {
   try {
-    const body = await req.json();
-    const { mood } = body;
+    const body = await request.json();
+    const { mood, user_id, email,mood_rating } = body;
 
-    const response = await fetch("https://reeham.app.n8n.cloud/webhook/ai_recommendation", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ mood }),
+    // Call your n8n webhook from the backend
+    const n8nResponse = await fetch('https://reeham.app.n8n.cloud/webhook/ai_recommendation', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        user_id: user_id,
+        email: email,
+        mood: mood,
+        mood_rating: mood_rating, // Pass mood rating to n8n
+        note: mood,
+        date: new Date().toISOString()
+      }),
     });
 
-    if (!response.ok) {
-         const errText = await response.text();
-         console.error("n8n responded with error:", errText);
-      return NextResponse.json({ error: "Failed to fetch from n8n" }, { status: 500 });
+    if (!n8nResponse.ok) {
+      throw new Error('Failed to get recommendation from n8n');
     }
 
-    const data = await response.json();
-    return NextResponse.json(data);
+    const result = await n8nResponse.json();
+    
+    return NextResponse.json({ 
+      recommendation: result[0]?.recommendation || "No recommendation found." 
+    });
+
   } catch (error) {
-     console.error("API Route Error:", error); 
-    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+    console.error('Error:', error);
+    return NextResponse.json(
+      { error: 'Failed to fetch recommendation' },
+      { status: 500 }
+    );
   }
 }
