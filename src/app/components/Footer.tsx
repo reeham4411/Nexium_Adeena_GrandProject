@@ -1,3 +1,4 @@
+"use client";
 import { useRouter } from "next/navigation";
 import { FaInstagram, FaLinkedin, FaGithub } from "react-icons/fa";
 

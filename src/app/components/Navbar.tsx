@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../lib/supabase";
 import { useRouter } from "next/navigation";
-
+import Image from "next/image";
 interface NavbarProps {
   className?: string;
 }
@@ -70,8 +70,15 @@ export default function Navbar({ className = "" }: NavbarProps) {
             onClick={handleHome}
             className="flex items-center space-x-3 cursor-pointer group"
           >
-            <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-blue-500 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg">
-              <span className="text-white text-xl font-bold">S</span>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg bg-white">
+              <Image
+                src="/leaf-logo.png"
+                alt="Logo"
+                width={60}
+                height={60}
+                className="object-contain"
+                priority
+              />
             </div>
             <div>
               <h1 className="text-2xl font-bold bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">
