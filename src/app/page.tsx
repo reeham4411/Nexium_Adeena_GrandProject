@@ -10,18 +10,16 @@ export default function Home() {
   const [mood, setMood] = useState("");
   const [recommendation, setRecommendation] = useState("");
   const [loading, setLoading] = useState(false);
-  const [userEmail, setUserEmail] = useState<string | null>(null);
+  const [moodRating, setMoodRating] = useState<number>(0);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
   const router = useRouter();
-  const [moodRating, setMoodRating] = useState<number>(0);
 
-  // Get user authentication status
+  // ✅ Check user authentication only
   useEffect(() => {
     const getUser = async () => {
       const {
         data: { user },
       } = await supabase.auth.getUser();
-      setUserEmail(user?.email || null);
       setIsAuthenticated(!!user);
     };
     getUser();
@@ -32,7 +30,6 @@ export default function Home() {
     const aiResponse = await fetchAIRecommendation(mood, moodRating);
     setRecommendation(aiResponse);
 
-    // Clear mood if successful (not an error message)
     if (
       !aiResponse.includes("Something went wrong") &&
       !aiResponse.includes("Please log in")
@@ -47,18 +44,6 @@ export default function Home() {
     router.push("/login");
   };
 
-  // const handleLogout = async () => {
-  //   await supabase.auth.signOut();
-  //   setUserEmail(null);
-  //   setIsAuthenticated(false);
-  //   setRecommendation("");
-  //   setMood("");
-  // };
-
-  // const handleDashboard = () => {
-  //   router.push("/dashboard");
-  // };
-
   // Show loading while checking authentication
   if (isAuthenticated === null) {
     return (
@@ -70,7 +55,6 @@ export default function Home() {
       </div>
     );
   }
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 relative overflow-hidden">
       {/* Animated background elements */}
