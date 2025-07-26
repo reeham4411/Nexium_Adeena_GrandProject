@@ -99,24 +99,31 @@ export default function Home() {
                 </div>
 
                 <div>
-                  <label className="block text-white font-medium mb-3 text-lg">
-                    Rate your mood (1-5)
-                  </label>
-                  <div className="flex gap-3">
-                    {[1, 2, 3, 4, 5].map((rating) => (
-                      <button
-                        key={rating}
-                        onClick={() => setMoodRating(rating)}
-                        className={`w-12 h-12 rounded-full border-2 font-bold transition-all duration-300 hover:scale-110 ${
-                          moodRating === rating
-                            ? "bg-gradient-to-r from-purple-500 to-blue-500 border-white text-white shadow-lg"
-                            : "bg-white/10 border-white/30 text-white hover:bg-white/20"
-                        }`}
-                      >
-                        {rating}
-                      </button>
-                    ))}
+                  <div>
+                    <label className="block text-white font-medium mb-3 text-lg">
+                      Rate your mood (1-5)
+                    </label>
+
+                    <div className="flex items-center gap-4">
+                      <span className="text-white font-semibold">1</span>
+
+                      <input
+                        type="range"
+                        min="1"
+                        max="5"
+                        value={moodRating}
+                        onChange={(e) => setMoodRating(Number(e.target.value))}
+                        className="w-full h-2 bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:shadow-lg"
+                      />
+
+                      <span className="text-white font-semibold">5</span>
+                    </div>
+
+                    <div className="mt-2 text-white text-center font-semibold">
+                      Mood: {moodRating}
+                    </div>
                   </div>
+
                   <div className="flex justify-between text-purple-200 text-sm mt-2">
                     <span>Very Bad</span>
                     <span>Great</span>
