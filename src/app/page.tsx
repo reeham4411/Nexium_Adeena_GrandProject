@@ -47,17 +47,17 @@ export default function Home() {
     router.push("/login");
   };
 
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-    setUserEmail(null);
-    setIsAuthenticated(false);
-    setRecommendation("");
-    setMood("");
-  };
+  // const handleLogout = async () => {
+  //   await supabase.auth.signOut();
+  //   setUserEmail(null);
+  //   setIsAuthenticated(false);
+  //   setRecommendation("");
+  //   setMood("");
+  // };
 
-  const handleDashboard = () => {
-    router.push("/dashboard");
-  };
+  // const handleDashboard = () => {
+  //   router.push("/dashboard");
+  // };
 
   // Show loading while checking authentication
   if (isAuthenticated === null) {
@@ -81,45 +81,6 @@ export default function Home() {
       </div>
 
       <div className="relative z-10 container mx-auto px-6 py-8">
-        {/* Header with Login/Logout */}
-        {/* <div className="flex justify-between items-center mb-12">
-          <div>
-            <h1 className="text-5xl font-bold mb-2 bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">
-              Serenely
-            </h1>
-            <p className="text-purple-200 text-lg">
-              How are you feeling today?
-            </p>
-          </div>
-          {isAuthenticated ? (
-            <div className="flex items-center gap-4">
-              <div className="text-right">
-                <p className="text-purple-200 text-sm">Welcome back,</p>
-                <p className="text-white font-medium">{userEmail}</p>
-              </div>
-              <button
-                onClick={handleDashboard}
-                className="bg-white/10 backdrop-blur-md text-white px-4 py-2 rounded-xl hover:bg-white/20 transition-all duration-300 border border-white/20 hover:scale-105"
-              >
-                Dashboard
-              </button>
-              <button
-                onClick={handleLogout}
-                className="bg-red-500/80 backdrop-blur-md text-white px-4 py-2 rounded-xl hover:bg-red-500 transition-all duration-300 hover:scale-105"
-              >
-                Logout
-              </button>
-            </div>
-          ) : (
-            <button
-              onClick={handleLogin}
-              className="bg-gradient-to-r from-purple-500 to-blue-500 text-white px-8 py-3 rounded-xl hover:from-purple-600 hover:to-blue-600 transition-all duration-300 font-medium hover:scale-105 shadow-lg"
-            >
-              Login
-            </button>
-          )}
-        </div> */}
-
         {/* Main Content */}
         <div className="max-w-2xl mx-auto">
           {isAuthenticated ? (
