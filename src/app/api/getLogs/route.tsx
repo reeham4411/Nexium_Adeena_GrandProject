@@ -1,158 +1,131 @@
 import { NextResponse } from "next/server";
-import { connectToDatabase } from "../../lib/mongodb";
+import { createClient } from "@supabase/supabase-js";
 
-export async function GET() {
+export async function GET(req: Request) {
+  const { searchParams } = new URL(req.url);
+  const userId = searchParams.get("id");
+
   try {
-    console.log(
-      "🔍 API Route: getLogs called - Reading from n8n managed collections"
-    );
+    // console.log(
+    //   "🔍 API Route: getLogs called - Reading from Supabase ai_recommendations table"
+    // );
 
-    const { db } = await connectToDatabase();
-    console.log("✅ Database connected successfully");
-
-    // Get data from your n8n managed collections
-    const moodLogsCollection = db.collection("mood_logs");
-    const aiAnalysisCollection = db.collection("ai_analysis_log");
-
-    console.log(
-      "📊 Reading from n8n managed collections: mood_logs and ai_analysis_log"
-    );
-
-    // Get mood ratings (sorted by date, most recent first)
-    const moodLogs = await moodLogsCollection
-      .find({})
-      .sort({ date: -1, timestamp: -1, _id: -1 })
-      .toArray();
-    console.log(`📝 Found ${moodLogs.length} mood rating entries`);
-
-    // Get AI analysis logs (sorted by timestamp, most recent first)
-    const aiLogs = await aiAnalysisCollection
-      .find({})
-      .sort({ timestamp: -1, date: -1, _id: -1 })
-      .toArray();
-    console.log(`🤖 Found ${aiLogs.length} AI analysis entries`);
-
-    // Log sample entries to see the structure
-    if (moodLogs.length > 0) {
-      console.log(
-        "📋 Sample mood_logs entry:",
-        JSON.stringify(moodLogs[0], null, 2)
-      );
-    }
-    if (aiLogs.length > 0) {
-      console.log(
-        "📋 Sample ai_analysis_log entry:",
-        JSON.stringify(aiLogs[0], null, 2)
+    if (!userId) {
+      return NextResponse.json(
+        { error: "Missing id parameter in query string" },
+        { status: 400 }
       );
     }
 
-    // Combine the data - try multiple strategies to match entries
-    const combinedLogs = aiLogs.map((aiLog, index) => {
-      // Strategy 1: Try to match by user email and timestamp proximity
-      let matchingMoodLog = moodLogs.find((moodLog) => {
-        if (
-          aiLog.user_email &&
-          moodLog.user_email &&
-          aiLog.user_email === moodLog.user_email
-        ) {
-          const aiTime = new Date(aiLog.timestamp || aiLog.date || 0);
-          const moodTime = new Date(moodLog.date || moodLog.timestamp || 0);
-          const timeDiff = Math.abs(aiTime.getTime() - moodTime.getTime());
-          return timeDiff < 10 * 60 * 1000; // Within 10 minutes
-        }
-        return false;
-      });
+    console.log("🆔 Filtering logs for user ID:", userId);
 
-      // Strategy 2: If no match by email+time, try just by index (if they're in same order)
-      if (!matchingMoodLog && moodLogs[index]) {
-        matchingMoodLog = moodLogs[index];
-      }
+    // Create Supabase client with service role key
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    );
 
-      // Strategy 3: If still no match, try the closest timestamp
-      if (!matchingMoodLog) {
-        const aiTime = new Date(aiLog.timestamp || aiLog.date || 0);
-        matchingMoodLog = moodLogs.reduce((closest, current) => {
-          const currentTime = new Date(current.date || current.timestamp || 0);
-          const closestTime = new Date(
-            closest?.date || closest?.timestamp || 0
-          );
+    console.log("✅ Using service role client to bypass RLS");
 
-          const currentDiff = Math.abs(
-            aiTime.getTime() - currentTime.getTime()
-          );
-          const closestDiff = Math.abs(
-            aiTime.getTime() - closestTime.getTime()
-          );
+    // First, let's check if the table exists and what data is in it
+    const { data: allData, error: allError } = await supabase
+      .from("ai_recommendations")
+      .select("*")
+      .limit(10);
 
-          return currentDiff < closestDiff ? current : closest;
-        }, moodLogs[0]);
-      }
+    // console.log("🔍 ALL data from ai_recommendations table:", allData);
+    // console.log("🔍 Any errors fetching sample data:", allError);
+    // console.log("🔍 Total records in table:", allData?.length || 0);
 
-      return {
-        // Mood description - try different field names
-        mood:
-          aiLog.journal ||
-          aiLog.note ||
-          aiLog.mood ||
-          aiLog.description ||
-          "No mood description available",
+    // Check what user IDs exist in the table
+    // const userIds = allData?.map((record) => record.user_id) || [];
+    // console.log("🔍 User IDs in table:", [...new Set(userIds)]);
+    // console.log("🔍 Looking for user ID:", userId);
 
-        // AI recommendation - try different field names
-        recommendation:
-          aiLog.ai_response ||
-          aiLog.response ||
-          aiLog.recommendation ||
-          aiLog.analysis ||
-          "No recommendation available",
+    // // Also check what columns exist in the table
+    // if (allData && allData.length > 0) {
+    //   console.log("📋 Table columns:", Object.keys(allData[0]));
+    // }
 
-        // Date/timestamp - try different field names
-        date:
-          aiLog.timestamp ||
-          aiLog.date ||
-          aiLog.created_at ||
-          new Date().toISOString(),
+    // Query the ai_recommendations table filtered by user_id
+    const { data: aiRecommendations, error } = await supabase
+      .from("ai_recommendations")
+      .select("*")
+      .eq("user_id", userId)
+      .order("created_at", { ascending: false });
 
-        // Mood rating - try different field names
-        moodRating:
-          matchingMoodLog?.mood_rating ||
-          matchingMoodLog?.rating ||
-          matchingMoodLog?.score ||
-          0,
+    if (error) {
+      console.error("❌ Supabase query error:", error);
+      return NextResponse.json(
+        { error: "Failed to fetch data from Supabase", details: error.message },
+        { status: 500 }
+      );
+    }
 
-        // User info
-        userEmail: aiLog.user_email || matchingMoodLog?.user_email || "unknown",
+    console.log(
+      `📝 Found ${
+        aiRecommendations?.length || 0
+      } AI recommendation entries for user ${userId}`
+    );
 
-        // Keep original IDs for debugging
-        aiLogId: aiLog._id,
-        moodLogId: matchingMoodLog?._id,
-      };
-    });
+    // Log sample entry to see the structure
+    // if (aiRecommendations && aiRecommendations.length > 0) {
+    //   console.log(
+    //     "📋 Sample ai_recommendations entry:",
+    //     JSON.stringify(aiRecommendations[0], null, 2)
+    //   );
+    // }
 
-    console.log(`📋 Combined ${combinedLogs.length} log entries`);
+    // Transform the data to match the expected Log interface
+    const transformedLogs = (aiRecommendations || []).map((rec) => ({
+      // Map mood_keywords to mood field
+      mood: rec.mood_keywords || "No mood description available",
+
+      // Map recommendations field
+      recommendation:
+        rec.recommendations ||
+        rec.recommendation ||
+        "No recommendation available",
+
+      // Map created_at to date field
+      date: rec.created_at || new Date().toISOString(),
+
+      // Optional fields
+      moodRating: undefined, // Not available in current schema
+      userId: rec.user_id,
+
+      // Keep original ID for debugging
+      originalId: rec.id,
+    }));
+
+    // console.log(`📋 Transformed ${transformedLogs.length} log entries`);
 
     // Filter out entries with no meaningful content
-    const filteredLogs = combinedLogs.filter(
+    const filteredLogs = transformedLogs.filter(
       (log) =>
         log.mood !== "No mood description available" ||
         log.recommendation !== "No recommendation available"
     );
 
-    console.log(`✅ Returning ${filteredLogs.length} valid log entries`);
+    // console.log(`✅ Returning ${filteredLogs.length} valid log entries`);
 
     // Log first entry for debugging
-    if (filteredLogs.length > 0) {
-      console.log(
-        "📋 Sample combined entry:",
-        JSON.stringify(filteredLogs[0], null, 2)
-      );
-    }
+    // if (filteredLogs.length > 0) {
+    //   console.log(
+    //     "📋 Sample transformed entry:",
+    //     JSON.stringify(filteredLogs[0], null, 2)
+    //   );
+    // }
 
     return NextResponse.json(filteredLogs);
   } catch (error) {
-    console.error("❌ Error reading from n8n collections:", error);
+    console.error(
+      "❌ Error reading from Supabase ai_recommendations table:",
+      error
+    );
     return NextResponse.json(
       {
-        error: "Failed to fetch logs from n8n collections",
+        error: "Failed to fetch logs from Supabase",
         details:
           typeof error === "object" && error !== null && "message" in error
             ? (error as { message: string }).message
