@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-// import { connectToDatabase } from "../lib/mongodb";
+
 import { useRouter } from "next/navigation";
+import RecommendationFormatter from "../components/RecommendationFormatter";
 
 interface Log {
   mood: string;
@@ -241,9 +242,11 @@ export default function Dashboard() {
                               <span className="text-lg">🤖</span>
                               AI Recommendation:
                             </p>
-                            <p className="text-white leading-relaxed bg-gradient-to-r from-green-400/10 to-blue-400/10 rounded-xl p-4 border border-white/10">
-                              {log.recommendation}
-                            </p>
+                            <div className="bg-gradient-to-r from-green-400/10 to-blue-400/10 rounded-xl p-4 border border-white/10">
+                              <RecommendationFormatter
+                                text={log.recommendation}
+                              />
+                            </div>
                           </div>
                         </div>
 
@@ -283,7 +286,7 @@ export default function Dashboard() {
               {logs.length > 0 && (
                 <div className="text-center mt-12">
                   <p className="text-purple-200">
-                    You&apos;ve viewed all {logs.length} mood entries. Keep
+                    You have viewed all {logs.length} mood entries. Keep
                     tracking to see more insights! 🌟
                   </p>
                 </div>
