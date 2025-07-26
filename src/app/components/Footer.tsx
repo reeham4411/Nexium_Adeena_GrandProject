@@ -12,7 +12,7 @@ export function Footer({ className = "" }: { className?: string }) {
 
   return (
     <footer
-      className={`bg-purple-200 text-gray-800 border-t border-purple-300 ${className}`}
+      className={`bg-purple-300 text-gray-800 border-t border-purple-300 ${className}`}
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="flex flex-col md:flex-row justify-between items-center md:items-start gap-8">
