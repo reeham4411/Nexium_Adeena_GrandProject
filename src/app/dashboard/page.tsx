@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { connectToDatabase } from "../lib/mongodb";
+// import { connectToDatabase } from "../lib/mongodb";
 import { useRouter } from "next/navigation";
 
 interface Log {

@@ -83,7 +83,7 @@ export default function Home() {
         {/* Header with Login/Logout */}
         <div className="flex justify-between items-center mb-12">
           <div>
-            <h1 className="text-5xl font-bold text-white mb-2 bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">
+            <h1 className="text-5xl font-bold mb-2 bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">
               MoodFlow
             </h1>
             <p className="text-purple-200 text-lg">
