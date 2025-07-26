@@ -82,7 +82,7 @@ export default function Home() {
 
       <div className="relative z-10 container mx-auto px-6 py-8">
         {/* Header with Login/Logout */}
-        <div className="flex justify-between items-center mb-12">
+        {/* <div className="flex justify-between items-center mb-12">
           <div>
             <h1 className="text-5xl font-bold mb-2 bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">
               Serenely
@@ -118,7 +118,7 @@ export default function Home() {
               Login
             </button>
           )}
-        </div>
+        </div> */}
 
         {/* Main Content */}
         <div className="max-w-2xl mx-auto">
