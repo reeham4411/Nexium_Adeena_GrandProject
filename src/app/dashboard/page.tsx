@@ -9,6 +9,8 @@ interface Log {
   mood: string;
   recommendation: string;
   date: string;
+  moodRating?: number;
+  userEmail?: string;
 }
 
 export default function Dashboard() {
@@ -19,13 +21,54 @@ export default function Dashboard() {
   useEffect(() => {
     async function fetchLogs() {
       try {
+        console.log(
+          "🔍 Dashboard: Fetching logs from n8n managed collections..."
+        );
         const res = await fetch("/api/getLogs");
+        console.log("📡 API Response status:", res.status);
+        console.log("📡 API Response ok:", res.ok);
+
+        if (!res.ok) {
+          const errorText = await res.text();
+          console.error("❌ API Error response:", errorText);
+          throw new Error(`HTTP error! status: ${res.status} - ${errorText}`);
+        }
+
         const data = await res.json();
-        setLogs(data);
+        console.log("📊 Raw API response:", data);
+        console.log("📝 Data type:", typeof data);
+        console.log("📝 Is array:", Array.isArray(data));
+        console.log(
+          "📝 Number of logs:",
+          Array.isArray(data) ? data.length : "Not an array"
+        );
+
+        if (Array.isArray(data) && data.length > 0) {
+          console.log("📋 First log entry:", JSON.stringify(data[0], null, 2));
+          console.log("📋 Sample mood:", data[0].mood);
+          console.log(
+            "📋 Sample recommendation:",
+            data[0].recommendation?.substring(0, 100) + "..."
+          );
+        }
+
+        setLogs(Array.isArray(data) ? data : []);
+        console.log(
+          "✅ Logs set successfully:",
+          Array.isArray(data) ? data.length : 0,
+          "entries"
+        );
       } catch (error) {
-        console.error("Error fetching logs:", error);
+        console.error("❌ Error fetching logs from n8n collections:", error);
+        if (error instanceof Error) {
+          console.error("❌ Error details:", error.message);
+        } else {
+          console.error("❌ Error details: Unknown error type");
+        }
+        setLogs([]); // Set empty array on error
       } finally {
         setLoading(false);
+        console.log("🏁 Dashboard loading completed");
       }
     }
     fetchLogs();
@@ -81,7 +124,9 @@ export default function Dashboard() {
       <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-16 w-16 border-4 border-purple-300 border-t-white mx-auto mb-4"></div>
-          <p className="text-white text-lg">Loading your mood history...</p>
+          <p className="text-white text-lg">
+            Loading your mood history from n8n...
+          </p>
         </div>
       </div>
     );
@@ -142,6 +187,11 @@ export default function Dashboard() {
                 <p className="text-purple-200 mb-8">
                   Start tracking your mood to see your emotional journey unfold
                   here.
+                  <br />
+                  <small className="text-purple-300 block mt-2">
+                    Data is managed by n8n workflow - check browser console for
+                    debug info
+                  </small>
                 </p>
                 <button
                   onClick={handleBack}
@@ -286,8 +336,8 @@ export default function Dashboard() {
               {logs.length > 0 && (
                 <div className="text-center mt-12">
                   <p className="text-purple-200">
-                    You have viewed all {logs.length} mood entries. Keep
-                    tracking to see more insights! 🌟
+                    You have viewed all {logs.length} mood entries from n8n.
+                    Keep tracking to see more insights! 🌟
                   </p>
                 </div>
               )}
