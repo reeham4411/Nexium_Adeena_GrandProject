@@ -118,7 +118,7 @@ export default function Dashboard() {
             Back to Home
           </button>
           <div className="text-center">
-            <h1 className="text-4xl font-bold text-white mb-2 bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">
+            <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">
               Your Mood Journey
             </h1>
             <p className="text-purple-200">
