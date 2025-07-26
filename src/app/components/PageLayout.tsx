@@ -64,7 +64,7 @@ const PageLayout: React.FC<PageLayoutProps> = ({
             )}
             {title && (
               <div className="text-center flex-1">
-                <h1 className="text-4xl font-bold text-white mb-2 bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">
+                <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">
                   {title}
                 </h1>
                 {subtitle && <p className="text-purple-200">{subtitle}</p>}
