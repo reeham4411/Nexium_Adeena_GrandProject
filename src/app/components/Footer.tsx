@@ -73,12 +73,12 @@ export function Footer({ className = "" }: { className?: string }) {
                   </button>
                 </li>
                 <li>
-                  <button
+                  {/* <button
                     onClick={() => handleNavigation("/journal")}
                     className="text-gray-700 hover:text-purple-800 transition-colors duration-300 text-sm hover:translate-x-1 transform inline-block"
                   >
                     Journal
-                  </button>
+                  </button> */}
                 </li>
               </ul>
             </div>
@@ -86,7 +86,7 @@ export function Footer({ className = "" }: { className?: string }) {
               <h4 className="text-lg font-semibold text-purple-800 mb-4">
                 Resources
               </h4>
-              <ul className="space-y-2">
+              {/* <ul className="space-y-2">
                 <li>
                   <button
                     onClick={() => handleNavigation("/blog")}
@@ -94,24 +94,24 @@ export function Footer({ className = "" }: { className?: string }) {
                   >
                     Blog
                   </button>
-                </li>
-                <li>
-                  <button
-                    onClick={() => handleNavigation("/faq")}
-                    className="text-gray-700 hover:text-purple-800 transition-colors duration-300 text-sm hover:translate-x-1 transform inline-block"
-                  >
-                    FAQ
-                  </button>
-                </li>
-                <li>
-                  <button
-                    onClick={() => handleNavigation("/contact")}
-                    className="text-gray-700 hover:text-purple-800 transition-colors duration-300 text-sm hover:translate-x-1 transform inline-block"
-                  >
-                    Contact
-                  </button>
-                </li>
-              </ul>
+                </li> */}
+              <li>
+                <button
+                  onClick={() => handleNavigation("/faq")}
+                  className="text-gray-700 hover:text-purple-800 transition-colors duration-300 text-sm hover:translate-x-1 transform inline-block"
+                >
+                  FAQ
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => handleNavigation("/contact")}
+                  className="text-gray-700 hover:text-purple-800 transition-colors duration-300 text-sm hover:translate-x-1 transform inline-block"
+                >
+                  Contact
+                </button>
+              </li>
+              {/* </ul> */}
             </div>
           </div>
         </div>
