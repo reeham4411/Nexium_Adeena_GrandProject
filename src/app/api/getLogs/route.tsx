@@ -28,10 +28,10 @@ export async function GET(req: Request) {
     console.log("✅ Using service role client to bypass RLS");
 
     // First, let's check if the table exists and what data is in it
-    const { data: allData, error: allError } = await supabase
-      .from("ai_recommendations")
-      .select("*")
-      .limit(10);
+    // const { data: allData } = await supabase
+    //   .from("ai_recommendations")
+    //   .select("*")
+    //   .limit(10);
 
     // console.log("🔍 ALL data from ai_recommendations table:", allData);
     // console.log("🔍 Any errors fetching sample data:", allError);
