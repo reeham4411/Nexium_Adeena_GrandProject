@@ -17,6 +17,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Serenely",
   description: "A mental health tracker to help you feel better",
+  icons: {
+    icon: "/leaf-logo.png",
+  },
 };
 
 export default function RootLayout({
@@ -33,7 +36,7 @@ export default function RootLayout({
         {children}
         <Analytics />
         <Footer />
-      </body> 
+      </body>
     </html>
   );
 }
