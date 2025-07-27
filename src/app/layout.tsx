@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   title: "Serenely",
   description: "A mental health tracker to help you feel better",
   icons: {
-    icon: "/leaf-logo.png",
+    icon: [{ url: "/leaf-logo.png", type: "image/png" }],
   },
 };
 
