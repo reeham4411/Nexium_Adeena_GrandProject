@@ -46,7 +46,7 @@ export default function Navbar({ className = "" }: NavbarProps) {
     setUserEmail(null);
     setIsAuthenticated(false);
     setIsMenuOpen(false);
-    router.push("/");
+    router.push("/login");
   };
 
   const handleDashboard = () => {
