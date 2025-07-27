@@ -32,6 +32,10 @@ A comprehensive mental health tracking application that helps users monitor thei
 - **Gemini API** - AI recommendation engine
 - **Railway** - N8N hosting platform
 
+## 🌐 Live Demo
+
+The application is deployed and accessible at: **https://serenely-mental-health-tracker.vercel.app/**
+
 ## 📁 Project Structure
 
 ```
@@ -123,7 +127,7 @@ CREATE TABLE ai_recommendations (
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/yourusername/serenely.git
+   git clone https://github.com/reeham4411/Nexium_Adeena_GrandProject
    cd serenely
    ```
 
@@ -139,15 +143,16 @@ CREATE TABLE ai_recommendations (
 
    ```env
    # Supabase Configuration
-   NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
-   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
-   SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
+   NEXT_PUBLIC_SUPABASE_URL=Your_supabase_url_here
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key_here
+   SUPABASE_SERVICE_ROLE_KEY=your_service_role_key_here
 
    # MongoDB Configuration
-   MONGODB_URI=your_mongodb_connection_string
+   MONGODB_URI=your_mongodb_connection_string_here
 
-   # Gemini API
-   GEMINI_API_KEY=your_gemini_api_key
+   # N8N Railway Configuration
+   NEXT_PUBLIC_N8N_RAILWAY_URL=https://n8n-production-3999.up.railway.app/webhook/ai_recommendation
+
    ```
 
 4. **Database Setup**
@@ -167,17 +172,13 @@ CREATE TABLE ai_recommendations (
    - Deploy N8N on Railway
    - Import the mood analysis workflow
    - Configure Gemini API integration
-   - Set up webhook endpoints
+   - Set up webhook endpoints pointing to your Railway N8N instance
 
 6. **Run the development server**
 
    ```bash
    npm run dev
    ```
-
-7. **Open your browser**
-
-   Navigate to [http://localhost:3000](http://localhost:3000)
 
 ## 🔧 Configuration
 
@@ -198,6 +199,8 @@ The N8N workflow handles:
 - Storing recommendations back to Supabase
 - Triggering notifications for users
 
+**N8N Webhook URL**: `https://n8n-production-3999.up.railway.app/webhook/ai_recommendation`
+
 ## 📊 Key Features Explained
 
 ### Magic Link Authentication
@@ -214,6 +217,11 @@ Interactive visualizations show mood trends over time, helping users identify pa
 
 ## 🚀 Deployment
 
+### Production Deployment
+
+The application is currently deployed on **Vercel** at:
+**https://serenely-mental-health-tracker.vercel.app/**
+
 ### Frontend (Vercel)
 
 ```bash
@@ -227,7 +235,8 @@ API routes are automatically deployed with the Next.js application on Vercel.
 
 ### N8N (Railway)
 
-Deploy your N8N workflows on Railway for reliable automation processing.
+The N8N automation workflows are deployed on Railway at:
+**https://n8n-production-3999.up.railway.app/**
 
 ## 📄 License
 

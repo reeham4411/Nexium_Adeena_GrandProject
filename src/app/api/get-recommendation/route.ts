@@ -24,11 +24,11 @@ export async function POST(request: NextRequest) {
     // console.log('🚀 Sending to n8n webhook:', JSON.stringify(n8nPayload, null, 2));
 
     // Call your n8n webhook from the backend
-    const n8nResponse = await fetch('https://n8n-production-3999.up.railway.app/webhook/ai_recommendation', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+    const n8nResponse = await fetch(process.env.NEXT_PUBLIC_N8N_RAILWAY_URL as string, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
       body: JSON.stringify(n8nPayload),
     });
 
