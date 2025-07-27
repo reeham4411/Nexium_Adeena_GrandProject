@@ -14,16 +14,30 @@ export default function Home() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
   const router = useRouter();
 
-  // ✅ Check user authentication only
+  // handles magic link & auth check
   useEffect(() => {
-    const getUser = async () => {
+    const handleAuth = async () => {
+      const url = new URL(window.location.href);
+      const code = url.searchParams.get("code");
+
+      if (code) {
+        const { error } = await supabase.auth.exchangeCodeForSession(code);
+        if (error) {
+          console.error("Failed to exchange code for session:", error.message);
+        } else {
+          // Optionally remove code from URL
+          router.replace("/");
+        }
+      }
+
       const {
         data: { user },
       } = await supabase.auth.getUser();
       setIsAuthenticated(!!user);
     };
-    getUser();
-  }, []);
+
+    handleAuth();
+  }, [router]);
 
   const handleSubmit = async () => {
     setLoading(true);
