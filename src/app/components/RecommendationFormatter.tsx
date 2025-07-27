@@ -26,7 +26,10 @@ const RecommendationFormatter: React.FC<RecommendationFormatterProps> = ({
         // Bold headers
         const content = line.trim().slice(2, -2);
         formattedElements.push(
-          <div key={index} className="font-bold text-white text-lg mb-3 mt-4">
+          <div
+            key={index}
+            className="font-bold text-slate-800 text-lg mb-3 mt-4"
+          >
             {formatInlineText(content)}
           </div>
         );
@@ -35,8 +38,8 @@ const RecommendationFormatter: React.FC<RecommendationFormatterProps> = ({
         const content = line.trim().slice(3).replace(/\*+$/, "");
         formattedElements.push(
           <div key={index} className="ml-6 mb-2 flex items-start gap-3">
-            <div className="w-2 h-2 bg-purple-400 rounded-full mt-2 flex-shrink-0"></div>
-            <span className="text-purple-100 leading-relaxed">
+            <div className="w-2 h-2 bg-indigo-500 rounded-full mt-2 flex-shrink-0"></div>
+            <span className="text-slate-600 leading-relaxed">
               {formatInlineText(content)}
             </span>
           </div>
@@ -46,8 +49,8 @@ const RecommendationFormatter: React.FC<RecommendationFormatterProps> = ({
         const content = line.trim().slice(1).replace(/\*+$/, "");
         formattedElements.push(
           <div key={index} className="ml-4 mb-3 flex items-start gap-3">
-            <div className="w-3 h-3 bg-blue-400 rounded-full mt-1.5 flex-shrink-0"></div>
-            <span className="text-white leading-relaxed">
+            <div className="w-3 h-3 bg-blue-500 rounded-full mt-1.5 flex-shrink-0"></div>
+            <span className="text-slate-700 leading-relaxed">
               {formatInlineText(content)}
             </span>
           </div>
@@ -55,7 +58,7 @@ const RecommendationFormatter: React.FC<RecommendationFormatterProps> = ({
       } else {
         // Regular paragraph
         formattedElements.push(
-          <p key={index} className="text-white leading-relaxed mb-4">
+          <p key={index} className="text-slate-700 leading-relaxed mb-4">
             {formatInlineText(line.trim())}
           </p>
         );
@@ -73,7 +76,7 @@ const RecommendationFormatter: React.FC<RecommendationFormatterProps> = ({
       if (part.startsWith("**") && part.endsWith("**")) {
         const boldText = part.slice(2, -2);
         return (
-          <strong key={index} className="font-bold text-purple-200">
+          <strong key={index} className="font-bold text-slate-800">
             {boldText}
           </strong>
         );

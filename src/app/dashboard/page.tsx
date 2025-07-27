@@ -104,10 +104,10 @@ export default function Dashboard() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-500 via-blue-900 to-indigo-900 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-purple-100 via-purple-50 to-violet-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-4 border-purple-300 border-t-white mx-auto mb-4"></div>
-          <p className="text-white text-lg">
+          <div className="animate-spin rounded-full h-16 w-16 border-4 border-purple-300 border-t-purple-600 mx-auto mb-4"></div>
+          <p className="text-slate-600 text-lg">
             Loading your mood history from Supabase...
           </p>
         </div>
@@ -117,12 +117,12 @@ export default function Dashboard() {
 
   return (
     <>
-      <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 relative overflow-hidden">
+      <div className="min-h-screen bg-gradient-to-br from-purple-100 via-purple-50 to-violet-50 relative overflow-hidden">
         {/* Animated background elements */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
-          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
-          <div className="absolute top-40 left-40 w-80 h-80 bg-indigo-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+          <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-50 animate-blob"></div>
+          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-violet-300 rounded-full mix-blend-multiply filter blur-xl opacity-50 animate-blob animation-delay-2000"></div>
+          <div className="absolute top-40 left-40 w-80 h-80 bg-fuchsia-300 rounded-full mix-blend-multiply filter blur-xl opacity-50 animate-blob animation-delay-4000"></div>
         </div>
 
         <div className="relative z-10 container mx-auto px-6 py-8">
@@ -130,7 +130,7 @@ export default function Dashboard() {
           <div className="flex items-center justify-between mb-12">
             <button
               onClick={handleBack}
-              className="flex items-center gap-2 text-purple-200 hover:text-white transition-colors duration-300"
+              className="flex items-center gap-2 text-slate-600 hover:text-slate-800 transition-colors duration-300"
             >
               <svg
                 className="w-5 h-5"
@@ -148,10 +148,10 @@ export default function Dashboard() {
               Back to Home
             </button>
             <div className="text-center">
-              <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">
+              <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent">
                 Your Mood Journey
               </h1>
-              <p className="text-purple-200">
+              <p className="text-slate-600">
                 Track your emotional patterns over time
               </p>
             </div>
@@ -161,25 +161,25 @@ export default function Dashboard() {
           <div className="max-w-4xl mx-auto">
             {logs.length === 0 ? (
               <div className="text-center py-16">
-                <div className="bg-white/10 backdrop-blur-xl rounded-3xl p-12 border border-white/20 shadow-2xl max-w-lg mx-auto">
-                  <div className="w-24 h-24 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                <div className="bg-white/80 backdrop-blur-xl rounded-3xl p-12 border border-blue-100 shadow-xl max-w-lg mx-auto">
+                  <div className="w-24 h-24 bg-gradient-to-r from-blue-400 to-indigo-500 rounded-full flex items-center justify-center mx-auto mb-6">
                     <span className="text-4xl">📊</span>
                   </div>
-                  <h2 className="text-2xl font-bold text-white mb-4">
+                  <h2 className="text-2xl font-bold text-slate-700 mb-4">
                     No Mood Logs Yet
                   </h2>
-                  <p className="text-purple-200 mb-8">
+                  <p className="text-slate-600 mb-8">
                     Start tracking your mood to see your emotional journey
                     unfold here.
                     <br />
-                    <small className="text-purple-300 block mt-2">
+                    <small className="text-slate-500 block mt-2">
                       Data is stored in Supabase - check browser console for
                       debug info
                     </small>
                   </p>
                   <button
                     onClick={handleBack}
-                    className="bg-gradient-to-r from-purple-500 to-blue-500 text-white px-8 py-3 rounded-2xl hover:from-purple-600 hover:to-blue-600 transition-all duration-300 font-medium hover:scale-105 shadow-lg"
+                    className="bg-gradient-to-r from-blue-400 to-indigo-500 text-white px-8 py-3 rounded-2xl hover:from-blue-500 hover:to-indigo-600 transition-all duration-300 font-medium hover:scale-105 shadow-lg"
                   >
                     Record Your First Mood ✨
                   </button>
@@ -189,42 +189,42 @@ export default function Dashboard() {
               <>
                 {/* Stats Overview */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                  <div className="bg-gradient-to-r from-purple-500/20 to-blue-500/20 backdrop-blur-xl rounded-2xl p-6 border border-white/20">
+                  <div className="bg-gradient-to-r from-blue-100/60 to-indigo-100/60 backdrop-blur-xl rounded-2xl p-6 border border-blue-200">
                     <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full flex items-center justify-center">
+                      <div className="w-12 h-12 bg-gradient-to-r from-blue-400 to-indigo-500 rounded-full flex items-center justify-center">
                         <span className="text-white text-xl">📈</span>
                       </div>
                       <div>
-                        <p className="text-purple-200 text-sm">Total Entries</p>
-                        <p className="text-white text-2xl font-bold">
+                        <p className="text-slate-600 text-sm">Total Entries</p>
+                        <p className="text-slate-800 text-2xl font-bold">
                           {logs.length}
                         </p>
                       </div>
                     </div>
                   </div>
 
-                  <div className="bg-gradient-to-r from-green-500/20 to-blue-500/20 backdrop-blur-xl rounded-2xl p-6 border border-white/20">
+                  <div className="bg-gradient-to-r from-emerald-100/60 to-blue-100/60 backdrop-blur-xl rounded-2xl p-6 border border-emerald-200">
                     <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-blue-500 rounded-full flex items-center justify-center">
+                      <div className="w-12 h-12 bg-gradient-to-r from-emerald-400 to-blue-400 rounded-full flex items-center justify-center">
                         <span className="text-white text-xl">🧠</span>
                       </div>
                       <div>
-                        <p className="text-purple-200 text-sm">AI Insights</p>
-                        <p className="text-white text-2xl font-bold">
+                        <p className="text-slate-600 text-sm">AI Insights</p>
+                        <p className="text-slate-800 text-2xl font-bold">
                           {logs.length}
                         </p>
                       </div>
                     </div>
                   </div>
 
-                  <div className="bg-gradient-to-r from-yellow-500/20 to-orange-500/20 backdrop-blur-xl rounded-2xl p-6 border border-white/20">
+                  <div className="bg-gradient-to-r from-amber-100/60 to-orange-100/60 backdrop-blur-xl rounded-2xl p-6 border border-amber-200">
                     <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full flex items-center justify-center">
+                      <div className="w-12 h-12 bg-gradient-to-r from-amber-400 to-orange-400 rounded-full flex items-center justify-center">
                         <span className="text-white text-xl">🔥</span>
                       </div>
                       <div>
-                        <p className="text-purple-200 text-sm">Days Tracking</p>
-                        <p className="text-white text-2xl font-bold">
+                        <p className="text-slate-600 text-sm">Days Tracking</p>
+                        <p className="text-slate-800 text-2xl font-bold">
                           {
                             new Set(
                               logs.map((log) =>
@@ -243,42 +243,42 @@ export default function Dashboard() {
                   {logs.map((log, i) => (
                     <div
                       key={i}
-                      className="bg-white/10 backdrop-blur-xl rounded-2xl p-6 border border-white/20 shadow-lg hover:bg-white/15 transition-all duration-300 animate-fadeIn"
+                      className="bg-white/80 backdrop-blur-xl rounded-2xl p-6 border border-blue-100 shadow-lg hover:bg-white/90 transition-all duration-300 animate-fadeIn"
                       style={{ animationDelay: `${i * 0.1}s` }}
                     >
                       <div className="flex items-start gap-4">
                         <div className="flex-shrink-0">
-                          <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full flex items-center justify-center text-2xl">
+                          <div className="w-12 h-12 bg-gradient-to-r from-blue-400 to-indigo-500 rounded-full flex items-center justify-center text-2xl">
                             {getMoodEmoji(log.mood)}
                           </div>
                         </div>
 
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center justify-between mb-3">
-                            <h3 className="text-white font-semibold text-lg">
+                            <h3 className="text-slate-800 font-semibold text-lg">
                               Mood Entry
                             </h3>
-                            <span className="text-purple-200 text-sm bg-white/10 px-3 py-1 rounded-full">
+                            <span className="text-slate-600 text-sm bg-blue-50 px-3 py-1 rounded-full border border-blue-200">
                               {formatDate(log.date)}
                             </span>
                           </div>
 
                           <div className="space-y-4">
                             <div>
-                              <p className="text-purple-200 text-sm mb-2 font-medium">
+                              <p className="text-slate-600 text-sm mb-2 font-medium">
                                 How you felt:
                               </p>
-                              <p className="text-white leading-relaxed bg-white/5 rounded-xl p-4 border border-white/10">
+                              <p className="text-slate-700 leading-relaxed bg-blue-50/50 rounded-xl p-4 border border-blue-100">
                                 {log.mood}
                               </p>
                             </div>
 
                             <div>
-                              <p className="text-purple-200 text-sm mb-2 font-medium flex items-center gap-2">
+                              <p className="text-slate-600 text-sm mb-2 font-medium flex items-center gap-2">
                                 <span className="text-lg">🤖</span>
                                 AI Recommendation:
                               </p>
-                              <div className="bg-gradient-to-r from-green-400/10 to-blue-400/10 rounded-xl p-4 border border-white/10">
+                              <div className="bg-gradient-to-r from-emerald-50/80 to-blue-50/80 rounded-xl p-4 border border-emerald-200">
                                 <RecommendationFormatter
                                   text={log.recommendation}
                                 />
@@ -286,8 +286,8 @@ export default function Dashboard() {
                             </div>
                           </div>
 
-                          <div className="mt-4 pt-4 border-t border-white/10">
-                            <p className="text-purple-300 text-xs flex items-center gap-2">
+                          <div className="mt-4 pt-4 border-t border-blue-100">
+                            <p className="text-slate-500 text-xs flex items-center gap-2">
                               <svg
                                 className="w-4 h-4"
                                 fill="none"
@@ -321,7 +321,7 @@ export default function Dashboard() {
                 {/* Load More Button (if needed in future) */}
                 {logs.length > 0 && (
                   <div className="text-center mt-12">
-                    <p className="text-purple-200">
+                    <p className="text-slate-600">
                       You have viewed all {logs.length} mood entries from
                       Supabase. Keep tracking to see more insights! 🌟
                     </p>
