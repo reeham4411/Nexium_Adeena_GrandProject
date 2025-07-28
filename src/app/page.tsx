@@ -165,7 +165,7 @@ export default function Home() {
                   <span className="text-4xl">🌟</span>
                 </div>
                 <h2 className="text-3xl font-bold text-slate-700 mb-4">
-                  Welcome to MoodFlow
+                  Welcome to Serenely!
                 </h2>
                 <p className="text-slate-600 mb-8 text-lg leading-relaxed">
                   Track your emotions, get AI-powered insights, and discover
