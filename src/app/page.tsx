@@ -5,7 +5,7 @@ import { fetchAIRecommendation } from "./utils/fetchAI";
 import { supabase } from "./lib/supabase";
 import { useRouter } from "next/navigation";
 import RecommendationFormatter from "./components/RecommendationFormatter";
-
+import Image from "next/image";
 export default function Home() {
   const [mood, setMood] = useState("");
   const [recommendation, setRecommendation] = useState("");
@@ -161,8 +161,13 @@ export default function Home() {
           ) : (
             <div className="text-center py-16">
               <div className="bg-white/80 backdrop-blur-xl rounded-3xl p-12 border border-blue-100 shadow-xl max-w-lg mx-auto">
-                <div className="w-24 h-24 bg-gradient-to-r from-blue-400 to-indigo-500 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <span className="text-4xl">🌟</span>
+                <div className="w-24 h-24 rounded-full overflow-hidden mx-auto mb-6 relative">
+                  <Image
+                    src="/leaf-bg-removal.png"
+                    alt="Logo"
+                    fill
+                    className="object-cover"
+                  />
                 </div>
                 <h2 className="text-3xl font-bold text-slate-700 mb-4">
                   Welcome to Serenely!
